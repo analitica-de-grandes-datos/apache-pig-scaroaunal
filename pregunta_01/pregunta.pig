@@ -19,5 +19,5 @@ u = LOAD 'data.tsv' USING PigStorage('\t')
         numero:INT);
 DUMP u;
 y = GROUP u BY $0;
-Z = FOREACH y GENERATE $0, COUNT($1);
+z = FOREACH y GENERATE $0, COUNT($1);
 store z into 'output';
