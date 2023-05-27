@@ -16,5 +16,5 @@ u = LOAD 'data.tsv' USING PigStorage('\t')
         AS(letra:CHARARRAY,
         fecha:CHARARRAY,
         numero:INT);
-y = ORDER u BY letra,numero asc;
-STORE y INTO "output" USING PigStorage(',')
+y = ORDER u BY letra asc;
+STORE y INTO "output" USING PigStorage(',');
