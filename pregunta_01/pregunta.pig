@@ -13,7 +13,7 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
-u = LOAD 'data.tsv' USING PigStorage(';')
+u = LOAD 'data.tsv' USING PigStorage('\t')
         AS(letra:CHARARRAY,
         fecha:CHARARRAY,
         numero:INT);
