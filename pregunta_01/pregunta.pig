@@ -19,4 +19,4 @@ u = LOAD 'data.tsv' USING PigStorage('\t')
         numero:INT);
 y = GROUP u BY $0;
 z = FOREACH y GENERATE $0, COUNT($1);
-store z into 'output';
+store z into 'output' USING PigStorage(',');
