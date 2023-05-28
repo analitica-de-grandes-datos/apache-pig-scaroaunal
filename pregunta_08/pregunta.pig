@@ -25,7 +25,7 @@ v = FOREACH u GENERATE letrasBag, FLATTEN(lista) as listasep;
 x = FOREACH v GENERATE letrasBag, FLATTEN(listasep) as listasep2;
 y = FOREACH  x GENERATE listasep2, FLATTEN(letrasBag) as letra_1;
 z = GROUP y BY (letra_1,listasep2);
-zz = FOREACH  Z GENERATE group as col1, count(z) as col2;
+zz = FOREACH  z GENERATE group as col1, count(z) as col2;
 zz = ORDER zz BY col1,col2;
 STORE zz INTO 'output' USING PigStorage(',');
 
