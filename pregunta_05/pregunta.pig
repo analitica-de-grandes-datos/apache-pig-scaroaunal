@@ -14,10 +14,11 @@ $ pig -x local -f pregunta.pig
 */
 u = LOAD 'data.tsv' USING PigStorage('\t')
         AS(COL1:CHARARRAY, 
-        COL2:BAG{t:TUPLE(chararray)},
+        COL2:BAG{t:TUPLE(letra:CHARARRAY)},
         COL3:MAP[]);
 
-y = FOREACH u GENERATE FLATTEN(COL2) as letters;
-z = GROUP y BY letters;
-x = FOREACH z GENERATE group, COUNT(y);
-STORE x INTO 'output'USING PigStorage(',');
+v = FOREACH u GENERATE COL2;
+x = FOREACH v GENERATE FLATTEN(COL2) as palabra;
+y = GROUP x by palabra;
+z = FOREACH y GENERATE group, count(x);
+STORE z into 'output'USING PigStorage(',');
