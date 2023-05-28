@@ -20,4 +20,5 @@ u = LOAD 'data.tsv' AS
           lista:map[]);
 
 v = FOREACH u GENERATE letras, SIZE(letter_bag) as bags, SIZE(lista) as listas;
+z = ORDER v BY letras, bags, listas;
 STORE z INTO 'output' USING PigStorage(',');
