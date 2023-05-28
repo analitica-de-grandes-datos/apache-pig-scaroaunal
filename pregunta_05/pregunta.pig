@@ -21,4 +21,4 @@ v = FOREACH u GENERATE COL2;
 x = FOREACH v GENERATE FLATTEN(COL2) as palabra;
 y = GROUP x by palabra;
 z = FOREACH y GENERATE group, count(x);
-STORE z into 'output'USING PigStorage(',');
+STORE z into 'output' USING PigStorage(',');
