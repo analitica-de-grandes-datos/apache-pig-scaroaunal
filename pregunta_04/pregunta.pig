@@ -45,5 +45,5 @@ u = LOAD 'data.tsv' USING PigStorage(',')
 
 v = ORDER u BY  driverId, truckId,eventTime;
 x = LIMIT v 10;
-y = FOREACH x USING driverId, truckId,eventTime;
+y = FOREACH x GENERATE driverId, truckId,eventTime;
 store y into 'output' USING PigStorage(',');
