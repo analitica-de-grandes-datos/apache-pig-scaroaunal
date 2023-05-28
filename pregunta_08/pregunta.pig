@@ -21,10 +21,11 @@ u = LOAD 'data.tsv' AS
           letrasBag:bag{},
           lista:map[]);
 
-v = FOREACH u GENERANTE letrasBag, FLATTEN(lista) as listasep;
-x = FOREACH v GENERANTE letrasBag, FLATTEN(listasep) as listasep2;
-z = FOREACH x GENERANTE listasep2, FLATTEN(letrasBag) as salida;
-y = GROUP z BY (salida,listasep2);
-zz = FOREACH y  GENERANTE group salida, count(listasep2) as cuenta;
-zz = ORDER zz by salida, cuenta;
+v = FOREACH u GENERATE, letrasBag, FLATTEN(lista) as listasep; 
+x = FOREACH v GENERATE, letrasBag, FLATTEN(listasep) as listasep2;
+y = FOREACH  x GENERATE, listasep2, FLATTEN(letrasBag) as letra_1;
+z = GROUP y BY (letra_1,listasep2);
+zz = FOREACH  Z GENERATE group as col1, count(z) as col2;
+zz = ORDER zz BY col1,col2;
 STORE zz INTO 'output' USING PigStorage(',');
+
