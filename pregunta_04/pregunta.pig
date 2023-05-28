@@ -39,11 +39,11 @@ u = LOAD 'data.tsv' USING PigStorage(',')
     eventKey: CHARARRAY,
     correlationId:CHARARRAY,
     driverName:CHARARRAY,
-    routeId:BIGINT,
+    routeId:LONG,
     routeName:CHARARRAY,
     eventDate:CHARARRAY);
 
 v = ORDER u BY  driverId, truckId,eventTime;
 x = LIMIT v 10;
-y = FOREACH X USING driverId, truckId,eventTime;
+y = FOREACH x USING driverId, truckId,eventTime;
 store y into 'output' USING PigStorage(',');
