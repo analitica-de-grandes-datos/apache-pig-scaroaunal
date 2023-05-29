@@ -30,5 +30,5 @@ u = LOAD 'data.csv' USING PigStorage(',')
            col6:INT);
 
 u = FOREACH u GENERATE col2;
-u = FILTER u BY SUBSTRING(col2,0,1) MATCHES '[M-Z]';
-STORE u INTO 'output' USING PigStorage(',');
+v = FILTER u BY SUBSTRING(col2,0,1) MATCHES '[M-Z]';
+STORE v INTO 'output' USING PigStorage(',');
