@@ -28,5 +28,5 @@ u = LOAD 'data.csv' USING PigStorage(',')
            col5:charArray,
            col6:INT);
 v = FOREACH u GENERATE col2, col5;
-x = FILTER v BY (SUBSTRING(col2,0,1) MATCHES '[Z]') AND (col5 MATCHES 'blue');
+x = FILTER v BY ((SUBSTRING(col2,0,1) MATCHES '[Z]') AND (col5 MATCHES 'blue'));
 STORE x INTO 'output' USING PigStorage(',');
