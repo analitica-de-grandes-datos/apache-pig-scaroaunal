@@ -28,6 +28,6 @@ u = LOAD 'data.csv' USING PigStorage(',')
            col4:charArray,
            col5:charArray,
            col6:INT);
-v = FOREACH col2, col5;
+v = FOREACH u GENERATE col2, col5;
 x = FILTER u BY (SUBSTRING(col2,0,1) MATCHES '[K]') OR (col5 MATCHES 'blue');
 STORE x INTO 'output' USING PigStorage(',');
