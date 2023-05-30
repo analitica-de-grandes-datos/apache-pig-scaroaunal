@@ -28,5 +28,5 @@ u = LOAD 'data.csv' USING PigStorage(',')
            col4:charArray,
            col5:charArray,
            col6:INT);
-v = FOREACH u GENERATE col2, STRPOS(col2, 'ia')
+v = FOREACH u GENERATE col2, STRPOS(col2, 'ia');
 STORE v INTO 'output' USING PigStorage(',');
