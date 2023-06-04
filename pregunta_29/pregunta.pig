@@ -34,7 +34,7 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
-u = LOAD 'data.csv' USING PigStorage(',')
+data = LOAD 'data.csv' USING PigStorage(',')
         AS(col1:INT,
            col2:charArray,
            col3:charArray,
@@ -43,7 +43,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
            col6:INT);
 
 
-data_month = FOREACH data u col4, LOWER(ToString(ToDate(col4, 'yyyy-MM-dd'), 'MMM')) AS month;
+data_month = FOREACH data GENERATE col4, LOWER(ToString(ToDate(col4, 'yyyy-MM-dd'), 'MMM')) AS month;
 
 data_month = FOREACH data_month GENERATE col4,
                      (CASE month
