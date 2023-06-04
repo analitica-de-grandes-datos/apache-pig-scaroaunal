@@ -34,3 +34,34 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+data = LOAD 'data.csv' USING PigStorage(',')
+        AS(col1:INT,
+           col2:charArray,
+           col3:charArray,
+           col4:charArray,
+           col5:charArray,
+           col6:INT);
+
+
+data_month = FOREACH data GENERATE col4, LOWER(ToString(ToDate(col4, 'yyyy-MM-dd'), 'MMM')) AS month;
+
+data_month = FOREACH data_month GENERATE col4,
+                     (CASE month
+                        WHEN 'jan' THEN 'ene'
+                        WHEN 'feb' THEN 'feb'
+                        WHEN 'mar' THEN 'mar'
+                        WHEN 'apr' THEN 'abr'
+                        WHEN 'may' THEN 'may'
+                        WHEN 'jun' THEN 'jun'
+                        WHEN 'jul' THEN 'jul'
+                        WHEN 'aug' THEN 'ago'
+                        WHEN 'sep' THEN 'sep'
+                        WHEN 'oct' THEN 'oct'
+                        WHEN 'nov' THEN 'nov'
+                        WHEN 'dec' THEN 'dic'
+                        ELSE month
+                     END),
+                     ToString(ToDate(col4, 'yyyy-MM-dd'), 'MM'),
+                     ToString(ToDate(col4, 'yyyy-MM-dd'), 'M');
+
+STORE data_month INTO 'output' USING PigStorage(',');

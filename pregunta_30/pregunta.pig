@@ -34,3 +34,36 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+u = LOAD 'data.csv' USING PigStorage(',')
+        AS(col1:INT,
+           col2:charArray,
+           col3:charArray,
+           col4:charArray,
+           col5:charArray,
+           col6:INT);
+
+u = FOREACH u GENERATE col4, LOWER(ToString(ToDate(col4, 'yyyy-MM-dd'), 'EEE')) AS day_short, LOWER(ToString(ToDate(col4, 'yyyy-MM-dd'), 'EEEE')) AS day_long;
+
+data_day = FOREACH u GENERATE col4,ToString(ToDate(col4, 'yyyy-MM-dd'), 'dd'),ToString(ToDate(col4, 'yyyy-MM-dd'), 'd'),
+                                 (CASE day_short
+                                        WHEN 'mon' THEN 'lun'
+                                        WHEN 'tue' THEN 'mar'
+                                        WHEN 'wed' THEN 'mie'
+                                        WHEN 'thu' THEN 'jue'
+                                        WHEN 'fri' THEN 'vie'
+                                        WHEN 'sat' THEN 'sab'
+                                        WHEN 'sun' THEN 'dom'
+                                        ELSE day_short
+                                END),
+                                 (CASE day_long
+                                        WHEN 'monday' THEN 'lunes'
+                                        WHEN 'tuesday' THEN 'martes'
+                                        WHEN 'wednesday' THEN 'miercoles'
+                                        WHEN 'thursday' THEN 'jueves'
+                                        WHEN 'friday' THEN 'viernes'
+                                        WHEN 'saturday' THEN 'sabado'
+                                        WHEN 'sunday' THEN 'domingo'
+                                        ELSE day_long
+                                END);
+
+STORE data_day INTO 'output' USING PigStorage(',');
